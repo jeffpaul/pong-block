@@ -22,7 +22,7 @@ Adds a playable, fully accessible Pong game block for your posts and pages.  Cus
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/pong_block` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/pong-block` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress.
 
 == Frequently Asked Questions ==
