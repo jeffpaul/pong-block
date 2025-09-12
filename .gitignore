@@ -1,8 +1,3 @@
-# Directories
-/build
-/dist
-/node_modules
-
 bower_components
 release
 vendor/*
@@ -11,6 +6,11 @@ phpunit.xml
 uploads
 upgrade
 cache
+
+# Directories
+/build
+/dist
+/node_modules
 
 # Project Files
 backstop_data
