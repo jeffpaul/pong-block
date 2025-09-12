@@ -1,9 +1,37 @@
 
 {
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+    "landingPage": "\/wp-admin\/post.php?post=7&action=edit",
+	"login": true,
+    "preferredVersions": {
+      "php": "8.1",
+      "wp": "latest"
+    },
 	"steps": [
+		{
+			"step": "updateUserMeta",
+			"meta": {
+				"admin_color": "modern",
+				"show_welcome_panel": 0
+			},
+			"userId": 1
+		},
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "Pong Block"
+			}
+		},
 		{
 			"plugin": "pong_block",
 			"action": "activate"
+		},
+		{
+			"step": "installTheme",
+			"themeZipFile": {
+				"resource": "wordpress.org/themes",
+				"slug": "twentytwentyfive"
+			}
 		},
 		{
 			"post": {
@@ -13,7 +41,7 @@
 					{
 						"name": "jeffpaul/pong-block",
 						"attributes": {
-							"winningScore": 7,
+							"winningScore": 10,
 							"colorScheme": "highContrast"
 						}
 					}
