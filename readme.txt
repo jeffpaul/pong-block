@@ -41,8 +41,9 @@ Yes.  Large, comfortable on-screen controls are available for mobile and tablets
 
 == Screenshots ==
 
-1. The Pong Block ready to start, showing overlay instructions and "Start Game" button.
-2. Pong gameplay in action, with responsive layout and on-screen controls.
+1. The Pong Block ready to start, showing overlay game mode "Easy", "Medium", and "Hard" buttons.
+2. Pong gameplay in action, with on-screen controls.
+3. Pong block editor controls showing "paddle size", "ball speed", "winning score", "default difficulty", and "color scheme" settings.
 
 == Changelog ==
 

@@ -9,6 +9,8 @@
 
 Pong Block is a Gutenberg block that lets visitors play Pong against a computer opponent, on any post or page. Designed for accessibility, customization, and fun.
 
+![Pong gameplay in action, with on-screen controls.](.wordpress-org/screenshot-2.png)
+
 ## Features
 
 - **Single Player Pong:** Classic gameplay—player vs Computer AI.
@@ -20,6 +22,8 @@ Pong Block is a Gutenberg block that lets visitors play Pong against a computer 
 - **Responsive Layout:** Game scales to any device, with touch controls optimized for mobile comfort.
 - **No Script Bloat:** Frontend JS loads only if block is present—clean and efficient.
 - **WordPress Playground Ready:** Try it instantly in Playground!
+
+![Pong block editor controls showing "paddle size", "ball speed", "winning score", "default difficulty", and "color scheme" settings.](.wordpress-org/screenshot-3.png)
 
 ## Usage
 
