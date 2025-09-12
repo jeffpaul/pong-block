@@ -6,7 +6,7 @@ Stable tag:        0.1.0
 License:           GPL-2.0-or-later
 License URI:       https://spdx.org/licenses/GPL-2.0-or-later.html
 
-Adds a playable, fully accessible Pong game block for your posts and pages.  Customizable difficulty, color schemes, and touch/mobile controls are included.
+Adds a playable, accessible Pong game block for posts and pages with customizable difficulty, colors, and touch controls.
 
 == Description ==
 
