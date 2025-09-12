@@ -6,8 +6,8 @@ Thanks for your interest in contributing!
 ## Branching & Release Flow
 
 * All new development and PRs should branch from `develop`.
-* Merge to `trunk` only for release candidates.
-* **Only built/compiled files (`/build`) should be committed to `trunk` and `stable` (for release).**
+* Merge to `main` only for release candidates.
+* **Only built/compiled files (`/build`) should be committed to `main` and `stable` (for release).**
 * Source files, docs, and code reviews occur on feature branches & `develop`.
 
 ## Code Standards
@@ -26,7 +26,7 @@ Thanks for your interest in contributing!
 
 ## Releasing
 
-* Only commit minified/built JS/CSS and PHP to `trunk` and `stable`.
+* Only commit minified/built JS/CSS and PHP to `main` and `stable`.
 * *Do not* include `/node_modules` or lockfiles in repository.
 * Test with `wp-env` or WordPress Playground before final merge.
 

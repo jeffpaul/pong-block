@@ -1,7 +1,7 @@
 
 # Pong Block for WordPress
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) ![Required PHP Version](https://img.shields.io/wordpress/plugin/required-php/pong-block?label=Requires%20PHP) ![Required WP Version](https://img.shields.io/wordpress/plugin/wp-version/pong-block?label=Requires%20WordPress) ![WordPress tested up to version](https://img.shields.io/wordpress/plugin/tested/pong-block?label=WordPress) [![GPL-2.0-or-later License](https://img.shields.io/github/license/jeffpaul/pong-block.svg)](https://github.com/jeffpaul/pong-block/blob/develop/LICENSE.md) [![WordPress Playground Demo](https://img.shields.io/badge/Playground_Demo-8A2BE2?logo=wordpress&logoColor=FFFFFF&labelColor=3858E9&color=3858E9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/jeffpaul/pong-block/develop/.github/blueprints/blueprint.json)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) ![Required PHP Version](https://img.shields.io/wordpress/plugin/required-php/pong-block?label=Requires%20PHP) ![Required WP Version](https://img.shields.io/wordpress/plugin/wp-version/pong-block?label=Requires%20WordPress) ![WordPress tested up to version](https://img.shields.io/wordpress/plugin/tested/pong-block?label=WordPress) [![GPL-2.0-or-later License](https://img.shields.io/github/license/jeffpaul/pong-block.svg)](https://github.com/jeffpaul/pong-block/blob/develop/LICENSE.md) [![WordPress Playground Demo](https://img.shields.io/badge/Playground_Demo-8A2BE2?logo=wordpress&logoColor=FFFFFF&labelColor=3858E9&color=3858E9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/jeffpaul/pong-block/develop/.wordpress-org/blueprints/blueprint.json)
 
 > Bring the classic Pong arcade game to your WordPress site!
 
@@ -60,8 +60,8 @@ See block sidebar controls for live difficulty adjustment and theme changes.
 
 ## Changelog
 
-A complete listing of all notable changes to Insert Special Characters are documented in [CHANGELOG.md](https://github.com/10up/insert-special-characters/blob/develop/CHANGELOG.md).
+A complete listing of all notable changes to Pong Block are documented in [CHANGELOG.md](https://github.com/jeffpaul/pong-block/blob/develop/CHANGELOG.md).
 
 ## Contributing
 
-Please read [CODE_OF_CONDUCT.md](https://github.com/10up/insert-special-characters/blob/develop/CODE_OF_CONDUCT.md) for details on our code of conduct, [CONTRIBUTING.md](https://github.com/10up/insert-special-characters/blob/develop/CONTRIBUTING.md) for details on the process for submitting pull requests to us, and [CREDITS.md](https://github.com/10up/insert-special-characters/blob/develop/CREDITS.md) for a listing of maintainers of, contributors to, and libraries used by Insert Special Characters.
+Please read [CODE_OF_CONDUCT.md](https://github.com/jeffpaul/pong-block/blob/develop/CODE_OF_CONDUCT.md) for details on our code of conduct, [CONTRIBUTING.md](https://github.com/jeffpaul/pong-block/blob/develop/CONTRIBUTING.md) for details on the process for submitting pull requests to us, and [CREDITS.md](https://github.com/jeffpaul/pong-block/blob/develop/CREDITS.md) for a listing of maintainers of, contributors to, and libraries used by Pong Block.
