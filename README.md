@@ -1,6 +1,8 @@
 
 # Pong Block for WordPress
 
+![Pong Block](https://github.com/jeffpaul/pong-block/blob/develop/.wordpress-org/banner-1544x500.png)
+
 [![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) ![Required PHP Version](https://img.shields.io/wordpress/plugin/required-php/pong-block?label=Requires%20PHP) ![Required WP Version](https://img.shields.io/wordpress/plugin/wp-version/pong-block?label=Requires%20WordPress) ![WordPress tested up to version](https://img.shields.io/wordpress/plugin/tested/pong-block?label=WordPress) [![GPL-2.0-or-later License](https://img.shields.io/github/license/jeffpaul/pong-block.svg)](https://github.com/jeffpaul/pong-block/blob/develop/LICENSE.md) [![WordPress Playground Demo](https://img.shields.io/badge/Playground_Demo-8A2BE2?logo=wordpress&logoColor=FFFFFF&labelColor=3858E9&color=3858E9)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/jeffpaul/pong-block/develop/.wordpress-org/blueprints/blueprint.json)
 
 > Bring the classic Pong arcade game to your WordPress site!
@@ -20,7 +22,7 @@ Pong Block is a Gutenberg block that lets visitors play Pong against a computer 
 - **Accessible Overlays:** Start, Instructions, and Winner overlays are labeled, focus-managed, and fully screen reader friendly.
 - **Fully Localizable:** All interface and instructions are ready for translation.
 - **Responsive Layout:** Game scales to any device, with touch controls optimized for mobile comfort.
-- **No Script Bloat:** Frontend JS loads only if block is present—clean and efficient.
+- **No Script Bloat:** Frontend JS loads only if block is present; clean and efficient.
 - **WordPress Playground Ready:** Try it instantly in Playground!
 
 ![Pong block editor controls showing "paddle size", "ball speed", "winning score", "default difficulty", and "color scheme" settings.](.wordpress-org/screenshot-3.png)
