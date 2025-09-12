@@ -1,0 +1,24 @@
+
+{
+	"steps": [
+		{
+			"plugin": "pong_block",
+			"action": "activate"
+		},
+		{
+			"post": {
+				"title": "Play Pong!",
+				"status": "publish",
+				"blocks": [
+					{
+						"name": "jeffpaul/pong-block",
+						"attributes": {
+							"winningScore": 7,
+							"colorScheme": "highContrast"
+						}
+					}
+				]
+			}
+		}
+	]
+}

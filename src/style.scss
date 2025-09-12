@@ -1,0 +1,108 @@
+
+.pong-block__game {
+	box-shadow: 0 5px 28px -8px #081c2d55;
+}
+.pong-block__canvas {
+	touch-action: manipulation;
+	user-select: none;
+	background: transparent;
+	margin: 0;
+	border: 0;
+}
+.pong-block__overlay {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%; height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 4;
+	background: rgba(0,0,0,0.55);
+	backdrop-filter: blur(2px);
+	color: #fff;
+}
+.pong-block__overlay-content {
+	background: #222a;
+	padding: 2em 2.5em;
+	border-radius: 16px;
+	box-shadow: 0 2px 8px #0003;
+	text-align: center;
+	max-width: 94vw;
+}
+.pong-block__overlay-btn {
+	margin: 0.5em;
+	font-size: 1.2em;
+	background: #fff;
+	color: #000;
+	border: 2px solid #000;
+	padding: 0.85em 2.5em;
+	border-radius: 6px;
+	cursor: pointer;
+	box-shadow: 0 2px 8px #1112;
+	font-weight: 600;
+	transition: background .105s, color .105s;
+}
+.pong-block__overlay-btn:hover {
+	background: #000;
+	color: #fff;
+}
+.pong-block__overlay-btn:focus {
+	outline: 3px solid #3899e4;
+}
+.pong-block__touch-controls {
+	position: absolute;
+	right: 7px; bottom: 7px;
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	z-index: 2;
+}
+.pong-block__touch-btn {
+	font-size: 2em;
+	width: 62px; height: 62px;
+	border-radius: 50%;
+	background: #333;
+	color: #fff;
+	border: none;
+	box-shadow: 0 1px 3px #0002;
+	display: flex; align-items: center; justify-content: center;
+	cursor: pointer;
+	transition: background 0.15s;
+	opacity: 0.97;
+}
+.pong-block__touch-btn:focus {
+	outline: 3px solid #2a88de;
+}
+@media (max-width: 680px) {
+	.pong-block__game {
+		min-width: unset;
+		padding: 0.5em 0.2em;
+	}
+	.pong-block__overlay-btn {
+		padding: 0.7em 1.8em;
+		font-size: 1.1em;
+	}
+}
+@media (max-width: 520px) {
+	.pong-block__game {
+		padding: 0.55em 0.06em;
+	}
+	.pong-block__overlay-content {
+		padding: 1.2em 0.4em;
+	}
+	.pong-block__overlay-btn {
+		padding: 0.6em 1.2em;
+		font-size: 1em;
+		margin: 0.3em;
+	}
+	.pong-block__touch-controls {
+		right: 3px; bottom: 3px;
+	}
+	.pong-block__touch-btn {
+		font-size: 1.68em;
+		width: 48px;
+		height: 48px;
+	}
+}
+
+	

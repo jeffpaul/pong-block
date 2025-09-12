@@ -1,0 +1,45 @@
+# Directories
+/build
+/dist
+/node_modules
+
+bower_components
+release
+vendor/*
+phpunit.xml
+.idea
+uploads
+upgrade
+cache
+
+# Project Files
+backstop_data
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Editors
+*.esproj
+*.tmproj
+*.tmproject
+tmtags
+.*.sw[a-z]
+*.un~
+Session.vim
+*.swp
+.vscode
+
+# Mac OSX
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Desktop.ini
+/debug.log
+/db.php
+
+# Tests
+tests/**
