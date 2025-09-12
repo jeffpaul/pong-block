@@ -23,8 +23,14 @@
 			}
 		},
 		{
-			"plugin": "pong_block",
-			"action": "activate"
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "url",
+				"slug": "https://github-proxy.com/proxy/?repo=jeffpaul/pong-block&branch=stable"
+			},
+			"options": {
+			  "activate": true
+			}
 		},
 		{
 			"step": "installTheme",
