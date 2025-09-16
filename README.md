@@ -56,6 +56,19 @@ See block sidebar controls for live difficulty adjustment and theme changes.
 - Requires `@wordpress/scripts` and Node.js v18+.
 - See [CONTRIBUTING.md](./CONTRIBUTING.md) for branch/release flow.
 
+### Automated Deployment
+
+This repository includes an automated build and deployment workflow:
+
+- **Development workflow:** Work in `develop` branch → Push to `main` for releases
+- **Automatic building:** When code is pushed to `main`, GitHub Actions automatically:
+  1. Installs dependencies and runs `npm run build`
+  2. Creates a clean distribution with only production files (using `.distignore`)
+  3. Pushes the built version to the `stable` branch
+- **Stable branch:** Contains the ready-to-use plugin with built assets, suitable for download or WordPress.org SVN sync
+
+This ensures the `stable` branch always contains a production-ready version of the plugin without development files.
+
 ## Support Level
 
 **Active:** I am actively working on this and expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.

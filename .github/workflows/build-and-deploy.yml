@@ -1,0 +1,80 @@
+name: "Build and Deploy to Stable Branch"
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build plugin
+        run: npm run build
+        
+      - name: Prepare distribution files
+        run: |
+          # Create a temporary directory for the distribution
+          mkdir -p dist-temp
+          
+          # Copy all files that should be in the distribution
+          # Based on .distignore, we exclude development files
+          rsync -av --exclude-from=.distignore . dist-temp/
+          
+          # Ensure build directory is included and up to date
+          if [ -d "build" ]; then
+            cp -r build dist-temp/
+          else
+            echo "Error: build directory not found!"
+            exit 1
+          fi
+          
+      - name: Deploy to stable branch
+        run: |
+          # Configure git
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # Check if stable branch exists remotely
+          if git ls-remote --exit-code --heads origin stable; then
+            echo "Stable branch exists, checking it out"
+            git fetch origin stable
+            git checkout -B stable origin/stable
+          else
+            echo "Stable branch doesn't exist, creating new orphan branch"
+            git checkout --orphan stable
+          fi
+          
+          # Remove all current files (except .git)
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+          
+          # Copy distribution files
+          cp -r dist-temp/* .
+          
+          # Remove the temporary directory
+          rm -rf dist-temp
+          
+          # Add and commit changes
+          git add .
+          git commit -m "Auto-build from main branch - $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          
+          # Push to stable branch
+          git push origin stable
