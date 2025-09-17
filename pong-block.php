@@ -15,6 +15,9 @@
  * @package           Pong Block
  */
 
+// Useful global constants.
+define( 'PONG_BLOCK_VERSION', '0.1.0' );
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
