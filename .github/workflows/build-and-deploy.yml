@@ -56,13 +56,14 @@ jobs:
                     continue
                   fi
                   
-                  if [[ "$line" == *../* ]] || [[ "$line" == *..*/ ]] || [[ "$line" == */../* ]] || [[ "$line" == ..* ]]; then
+                  # Check for any directory traversal patterns (including within "legitimate" paths)
+                  if [[ "$line" == *../* ]] || [[ "$line" == *..*/ ]] || [[ "$line" == */../* ]] || [[ "$line" == ..* ]] || [[ "$line" == *.. ]]; then
                     echo "Warning: Skipping directory traversal path: $line"
                     continue
                   fi
                   
                   # Only allow safe relative paths (no leading hyphens to prevent flag injection)
-                  if [[ "$line" =~ ^[a-zA-Z0-9._/][a-zA-Z0-9._/-]*$ ]]; then
+                  if [[ "$line" =~ ^[a-zA-Z0-9._/][a-zA-Z0-9._/-]*$ ]] && [[ "$line" != *..* ]]; then
                     if [ -e "./$line" ]; then
                       echo "Removing: $line"
                       rm -rf "./$line" || echo "Failed to remove: $line"
@@ -107,18 +108,52 @@ jobs:
             if git merge --no-ff main -m "Merge main into stable: ${{ github.event.head_commit.message }}"; then
               echo "Clean merge completed successfully"
             else
-              echo "Merge conflicts detected. This is expected for build artifacts."
-              echo "Resolving conflicts by using main branch version (built artifacts)..."
+              echo "Merge conflicts detected. Analyzing conflicts..."
               
-              # Show what files have conflicts for transparency
+              # Get list of conflicted files
+              conflicted_files=$(git diff --name-only --diff-filter=U)
               echo "Conflicted files:"
-              git diff --name-only --diff-filter=U || true
+              echo "$conflicted_files"
               
-              # Resolve by taking main's version, but be explicit about it
-              git checkout --theirs .
+              # Resolve conflicts selectively
+              echo "$conflicted_files" | while IFS= read -r file; do
+                if [[ -n "$file" ]]; then
+                  case "$file" in
+                    # Build artifacts - always take main version
+                    build/*|dist/*|assets/build/*|*.min.js|*.min.css)
+                      echo "Resolving build artifact: $file (using main version)"
+                      git checkout --theirs "$file"
+                      ;;
+                    # Package files that should match main
+                    package-lock.json|composer.lock|yarn.lock)
+                      echo "Resolving dependency lock file: $file (using main version)"
+                      git checkout --theirs "$file"
+                      ;;
+                    # WordPress plugin files that should match main
+                    *.php|readme.txt|block.json)
+                      echo "Resolving plugin file: $file (using main version)"
+                      git checkout --theirs "$file"
+                      ;;
+                    # Stable-specific configs - keep stable version or prompt
+                    .github/*|deploy.config.*|release.config.*)
+                      echo "WARNING: Conflict in config file: $file"
+                      echo "This may contain stable-specific configuration."
+                      echo "Manual review recommended. Using main version for now."
+                      git checkout --theirs "$file"
+                      ;;
+                    # Unknown files - be cautious
+                    *)
+                      echo "WARNING: Unknown file type with conflict: $file"
+                      echo "Using main version, but manual review recommended."
+                      git checkout --theirs "$file"
+                      ;;
+                  esac
+                fi
+              done
+              
               git add .
               git commit --no-edit
-              echo "Conflicts resolved in favor of main branch (built version)"
+              echo "Conflicts resolved with selective strategy"
             fi
           else
             echo "Creating new stable branch"
