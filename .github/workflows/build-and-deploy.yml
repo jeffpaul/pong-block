@@ -1,0 +1,171 @@
+# WordPress Plugin Release Workflow
+# Builds to stable branch when main is updated
+
+name: WordPress Plugin Release
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Install dependencies and build
+        run: |
+          npm install
+          npm run build
+
+      - name: Clean for release
+        run: |
+          # Remove files/directories listed in .distignore
+          if [ -f .distignore ]; then
+            echo "Removing files based on .distignore..."
+            
+            while IFS= read -r line; do
+              # Skip empty lines and comments
+              if [[ -n "$line" && ! "$line" =~ ^[[:space:]]*# ]]; then
+                line=$(echo "$line" | xargs)
+                
+                if [ -n "$line" ]; then
+                  # Security validation: prevent directory traversal and absolute paths
+                  if [[ "$line" == /* ]]; then
+                    echo "Warning: Skipping absolute path: $line"
+                    continue
+                  fi
+                  
+                  # Check for any directory traversal patterns (including within "legitimate" paths)
+                  if [[ "$line" == *../* ]] || [[ "$line" == *..*/ ]] || [[ "$line" == */../* ]] || [[ "$line" == ..* ]] || [[ "$line" == *.. ]]; then
+                    echo "Warning: Skipping directory traversal path: $line"
+                    continue
+                  fi
+                  
+                  # Only allow safe relative paths (no leading hyphens to prevent flag injection)
+                  if [[ "$line" =~ ^[a-zA-Z0-9._/][a-zA-Z0-9._/-]*$ ]] && [[ "$line" != *..* ]]; then
+                    if [ -e "./$line" ]; then
+                      echo "Removing: $line"
+                      rm -rf "./$line" || echo "Failed to remove: $line"
+                    else
+                      echo "Skipping (not found): $line"
+                    fi
+                  else
+                    echo "Warning: Skipping path with invalid characters: $line"
+                  fi
+                fi
+              fi
+            done < .distignore
+            
+            rm -f .distignore
+          fi
+
+      - name: Deploy to stable and WordPress.org
+        run: |
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Commit cleaned build
+          git add -A
+          
+          # Check if there are any changes to commit
+          if git diff --cached --quiet; then
+            echo "No changes to commit after build and cleanup"
+            git commit --allow-empty -m "Build (no changes): ${{ github.event.head_commit.message }}"
+          else
+            echo "Committing build changes"
+            git commit -m "Build: ${{ github.event.head_commit.message }}"
+          fi
+          
+          # Push to stable branch safely
+          if git ls-remote --heads origin stable | grep -q stable; then
+            echo "Stable branch exists, switching to it"
+            git fetch origin stable
+            git checkout stable
+            
+            # Attempt merge and detect conflicts
+            if git merge --no-ff main -m "Merge main into stable: ${{ github.event.head_commit.message }}"; then
+              echo "Clean merge completed successfully"
+            else
+              echo "Merge conflicts detected. Analyzing conflicts..."
+              
+              # Get list of conflicted files
+              conflicted_files=$(git diff --name-only --diff-filter=U)
+              echo "Conflicted files:"
+              echo "$conflicted_files"
+              
+              # Resolve conflicts selectively
+              for file in $conflicted_files; do
+                if [[ -n "$file" ]]; then
+                  case "$file" in
+                    # Build artifacts - always take main version
+                    build/*|dist/*|assets/build/*|*.min.js|*.min.css)
+                      echo "Resolving build artifact: $file (using main version)"
+                      git checkout --theirs "$file"
+                      ;;
+                    # Package files that should match main
+                    package-lock.json|composer.lock|yarn.lock)
+                      echo "Resolving dependency lock file: $file (using main version)"
+                      git checkout --theirs "$file"
+                      ;;
+                    # WordPress plugin files that should match main
+                    *.php|readme.txt|block.json)
+                      echo "Resolving plugin file: $file (using main version)"
+                      git checkout --theirs "$file"
+                      ;;
+                    # Stable-specific configs - keep stable version or prompt
+                    .github/*|deploy.config.*|release.config.*)
+                      echo "WARNING: Conflict in config file: $file"
+                      echo "This may contain stable-specific configuration."
+                      echo "Manual review recommended. Using main version for now."
+                      git checkout --theirs "$file"
+                      ;;
+                    # Unknown files - be cautious
+                    *)
+                      echo "WARNING: Unknown file type with conflict: $file"
+                      echo "Using main version, but manual review recommended."
+                      git checkout --theirs "$file"
+                      ;;
+                  esac
+                fi
+              done
+              
+              git add .
+              git commit --no-edit
+              echo "Conflicts resolved with selective strategy"
+            fi
+          else
+            echo "Creating new stable branch"
+            git checkout -b stable
+          fi
+          
+          # Push the stable branch
+          git push origin stable
+
+      - name: Deploy to WordPress.org
+        uses: 10up/action-wordpress-plugin-deploy@2.2.1
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: pong-block

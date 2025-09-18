@@ -1,0 +1,58 @@
+
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+    "landingPage": "\/wp-admin\/post.php?post=7&action=edit",
+	"login": true,
+    "preferredVersions": {
+      "php": "8.1",
+      "wp": "latest"
+    },
+	"steps": [
+		{
+			"step": "updateUserMeta",
+			"meta": {
+				"admin_color": "modern",
+				"show_welcome_panel": 0
+			},
+			"userId": 1
+		},
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "Pong Block"
+			}
+		},
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "url",
+				"slug": "https://github-proxy.com/proxy/?repo=jeffpaul/pong-block&branch=stable"
+			},
+			"options": {
+			  "activate": true
+			}
+		},
+		{
+			"step": "installTheme",
+			"themeZipFile": {
+				"resource": "wordpress.org/themes",
+				"slug": "twentytwentyfive"
+			}
+		},
+		{
+			"post": {
+				"title": "Play Pong!",
+				"status": "publish",
+				"blocks": [
+					{
+						"name": "jeffpaul/pong-block",
+						"attributes": {
+							"winningScore": 10,
+							"colorScheme": "highContrast"
+						}
+					}
+				]
+			}
+		}
+	]
+}
