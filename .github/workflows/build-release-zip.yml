@@ -10,6 +10,10 @@ on:
         description: 'Version for the release (e.g., 1.0.0)'
         required: false
         type: string
+  workflow_call:
+    push:
+      branches:
+        - main
 
 permissions:
   contents: write
