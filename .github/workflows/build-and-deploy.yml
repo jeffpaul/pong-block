@@ -116,7 +116,7 @@ jobs:
               echo "$conflicted_files"
               
               # Resolve conflicts selectively
-              echo "$conflicted_files" | while IFS= read -r file; do
+              while IFS= read -r file; do
                 if [[ -n "$file" ]]; then
                   case "$file" in
                     # Build artifacts - always take main version
@@ -149,7 +149,7 @@ jobs:
                       ;;
                   esac
                 fi
-              done
+              done < <(echo "$conflicted_files")
               
               git add .
               git commit --no-edit
@@ -164,7 +164,7 @@ jobs:
           git push origin stable
 
       - name: Deploy to WordPress.org
-        uses: 10up/action-wordpress-plugin-deploy@stable
+        uses: 10up/action-wordpress-plugin-deploy@2.2.1
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
