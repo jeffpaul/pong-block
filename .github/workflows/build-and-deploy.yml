@@ -36,6 +36,15 @@ jobs:
         run: |
           npm install
           npm run build
+          
+          # Verify build output exists
+          if [ -d "build" ]; then
+            echo "Build directory created successfully:"
+            ls -la build/
+          else
+            echo "ERROR: Build directory not found!"
+            exit 1
+          fi
 
       - name: Clean for release
         run: |
@@ -87,6 +96,10 @@ jobs:
           
           # Commit cleaned build
           git add -A
+          
+          # Debug: Show what's being staged
+          echo "Files being staged for stable branch:"
+          git diff --cached --name-only
           
           # Check if there are any changes to commit
           if git diff --cached --quiet; then
