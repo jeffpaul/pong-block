@@ -63,8 +63,12 @@ jobs:
                   
                   # Only allow safe relative paths (no leading hyphens to prevent flag injection)
                   if [[ "$line" =~ ^[a-zA-Z0-9._/][a-zA-Z0-9._/-]*$ ]]; then
-                    echo "Removing: $line"
-                    rm -rf "./$line" 2>/dev/null || true
+                    if [ -e "./$line" ]; then
+                      echo "Removing: $line"
+                      rm -rf "./$line" || echo "Failed to remove: $line"
+                    else
+                      echo "Skipping (not found): $line"
+                    fi
                   else
                     echo "Warning: Skipping path with invalid characters: $line"
                   fi
