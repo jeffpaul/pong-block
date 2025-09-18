@@ -180,6 +180,8 @@ jobs:
 
       - name: Deploy to WordPress.org
         uses: 10up/action-wordpress-plugin-deploy@2.2.1
+        with:
+          build-dir: ./
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
