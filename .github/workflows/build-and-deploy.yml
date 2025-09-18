@@ -116,7 +116,7 @@ jobs:
               echo "$conflicted_files"
               
               # Resolve conflicts selectively
-              while IFS= read -r file; do
+              for file in $conflicted_files; do
                 if [[ -n "$file" ]]; then
                   case "$file" in
                     # Build artifacts - always take main version
@@ -149,7 +149,7 @@ jobs:
                       ;;
                   esac
                 fi
-              done < <(echo "$conflicted_files")
+              done
               
               git add .
               git commit --no-edit
