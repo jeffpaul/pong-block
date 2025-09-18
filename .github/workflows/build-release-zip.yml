@@ -1,0 +1,45 @@
+# Build Release ZIP
+# Generates a plugin ZIP for manual testing before release
+
+name: Build Release ZIP
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version for the release (e.g., 1.0.0)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build plugin ZIP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Build plugin
+        run: |
+          npm install
+          npm run build
+
+      - name: Generate plugin ZIP
+        uses: 10up/action-wordpress-plugin-zip-generator@stable
+        with:
+          slug: pong-block
+
+      - name: Upload ZIP as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pong-block-${{ github.event.inputs.version || 'latest' }}
+          path: ${{ github.workspace }}/pong-block.zip
+          retention-days: 30
