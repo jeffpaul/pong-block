@@ -1,5 +1,5 @@
 # WordPress Plugin Deploy
-# Builds plugin and deploys to WordPress.org on release
+# Deploys to WordPress.org and creates GitHub release on publish
 
 name: WordPress Plugin Deploy
 
@@ -11,8 +11,8 @@ permissions:
   contents: write
 
 jobs:
-  tag:
-    name: New release
+  deploy:
+    name: Deploy to WordPress.org
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -37,7 +37,7 @@ jobs:
           npm run build
 
       - name: Generate plugin ZIP
-        uses: action-wordpress-plugin-build-zip@1.0.2
+        uses: 10up/action-wordpress-plugin-build-zip@1.0.2
         with:
           slug: pong-block
 
