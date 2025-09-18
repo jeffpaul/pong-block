@@ -1,11 +1,11 @@
 # WordPress Plugin Release Workflow
-# Builds to stable branch when trunk is updated
+# Builds to stable branch when main is updated
 
 name: WordPress Plugin Release
 
 on:
   push:
-    branches: [ trunk ]
+    branches: [ main ]
   workflow_dispatch:
     inputs:
       version:
@@ -21,10 +21,10 @@ jobs:
   build-and-release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout trunk
+      - name: Checkout main
         uses: actions/checkout@v4
         with:
-          ref: trunk
+          ref: main
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
