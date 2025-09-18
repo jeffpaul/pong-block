@@ -47,5 +47,5 @@ Yes.  Large, comfortable on-screen controls are available for mobile and tablets
 
 == Changelog ==
 
-= 0.1.0 - 2025-09-DD =
-* Initial release to WPORG.
+= 0.1.0 - 2025-09-18 =
+* Initial release to WordPress.org.
