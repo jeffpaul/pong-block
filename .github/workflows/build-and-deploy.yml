@@ -80,28 +80,21 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Initialize git in the clean directory
-          git init
-          git remote add origin https://github.com/${{ github.repository }}
-          
-          # Get version from latest commit message or use timestamp
+          # Get commit message for stable branch
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             VERSION="${{ github.event.inputs.version }}"
             COMMIT_MSG="Release version $VERSION"
           else
-            # Use the commit message from trunk push
+            # Use the commit message from main push
             COMMIT_MSG="${{ github.event.head_commit.message }}"
           fi
           
-          # Add all files and commit
-          git add .
+          # Stage all changes (including deletions from .distignore cleanup)
+          git add -A
           git commit -m "$COMMIT_MSG"
           
-          # Create/update stable branch
-          git branch stable
-          git checkout stable
-          
-          # Push to stable branch
+          # Create or switch to stable branch and push the cleaned build
+          git checkout -B stable
           git push origin stable --force
           
           # Create tag if version was specified
