@@ -7,7 +7,10 @@ src
 tests
 
 # Files to ignore
-.*
+.distignore
+.gitattributes
+.gitignore
+.wordpress-version-checker.json
 CHANGELOG.md
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
