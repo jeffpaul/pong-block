@@ -55,9 +55,9 @@ jobs:
                     continue
                   fi
                   
-                  # Check for any directory traversal patterns (including within "legitimate" paths)
-                  if [[ "$line" == *../* ]] || [[ "$line" == *..*/ ]] || [[ "$line" == */../* ]] || [[ "$line" == ..* ]] || [[ "$line" == *.. ]]; then
-                    echo "Warning: Skipping directory traversal path: $line"
+                  # Never remove .git directory or any git-related files
+                  if [[ "$line" == ".git" ]] || [[ "$line" == ".git/"* ]] || [[ "$line" == ".*" && -d ".git" ]]; then
+                    echo "Warning: Protecting .git directory, skipping: $line"
                     continue
                   fi
                   
