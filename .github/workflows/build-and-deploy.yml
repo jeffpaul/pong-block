@@ -56,13 +56,13 @@ jobs:
                     continue
                   fi
                   
-                  if [[ "$line" == *../* ]] || [[ "$line" == *..* ]]; then
+                  if [[ "$line" == *../* ]] || [[ "$line" == *..*/ ]] || [[ "$line" == */../* ]] || [[ "$line" == ..* ]]; then
                     echo "Warning: Skipping directory traversal path: $line"
                     continue
                   fi
                   
-                  # Only allow safe relative paths
-                  if [[ "$line" =~ ^[a-zA-Z0-9._/-]+$ ]]; then
+                  # Only allow safe relative paths (no leading hyphens to prevent flag injection)
+                  if [[ "$line" =~ ^[a-zA-Z0-9._/][a-zA-Z0-9._/-]*$ ]]; then
                     echo "Removing: $line"
                     rm -rf "./$line" 2>/dev/null || true
                   else
@@ -83,7 +83,14 @@ jobs:
           
           # Commit cleaned build
           git add -A
-          git commit -m "${{ github.event.head_commit.message }}"
+          
+          # Check if there are any changes to commit
+          if git diff --cached --quiet; then
+            echo "No changes to commit after build and cleanup"
+            git commit --allow-empty -m "Build: ${{ github.event.head_commit.message }}"
+          else
+            git commit -m "Build: ${{ github.event.head_commit.message }}"
+          fi
           
           # Push to stable branch
           git checkout -B stable
