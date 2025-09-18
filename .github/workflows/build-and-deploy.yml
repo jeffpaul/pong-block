@@ -1,0 +1,128 @@
+# WordPress Plugin Release Workflow
+# Builds to stable branch when trunk is updated
+
+name: WordPress Plugin Release
+
+on:
+  push:
+    branches: [ trunk ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.0.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout trunk
+        uses: actions/checkout@v4
+        with:
+          ref: trunk
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Install dependencies
+        run: |
+          npm install
+          # No composer dependencies needed for this plugin
+
+      - name: Build plugin
+        run: |
+          # Build block assets using WordPress scripts
+          npm run build
+
+      - name: Prepare release
+        run: |
+          # Remove files/directories listed in .distignore
+          if [ -f .distignore ]; then
+            echo "Removing files based on .distignore..."
+            
+            # Process each line in .distignore
+            while IFS= read -r line; do
+              # Skip empty lines and comments
+              if [[ -n "$line" && ! "$line" =~ ^[[:space:]]*# ]]; then
+                # Remove leading/trailing whitespace
+                line=$(echo "$line" | xargs)
+                
+                if [ -n "$line" ]; then
+                  echo "Removing: $line"
+                  rm -rf "$line" 2>/dev/null || true
+                fi
+              fi
+            done < .distignore
+            
+            # Always remove .distignore itself from the final build
+            rm -f .distignore
+          else
+            echo "Warning: .distignore file not found"
+          fi
+
+      - name: Deploy to stable branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Initialize git in the clean directory
+          git init
+          git remote add origin https://github.com/${{ github.repository }}
+          
+          # Get version from latest commit message or use timestamp
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+            COMMIT_MSG="Release version $VERSION"
+          else
+            # Use the commit message from trunk push
+            COMMIT_MSG="${{ github.event.head_commit.message }}"
+          fi
+          
+          # Add all files and commit
+          git add .
+          git commit -m "$COMMIT_MSG"
+          
+          # Create/update stable branch
+          git branch stable
+          git checkout stable
+          
+          # Push to stable branch
+          git push origin stable --force
+          
+          # Create tag if version was specified
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            git tag -a "v$VERSION" -m "Release $VERSION"
+            git push origin "v$VERSION"
+          fi
+
+  # Deploy to WordPress.org SVN
+  wordpress-org-deploy:
+    needs: build-and-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout stable branch
+        uses: actions/checkout@v4
+        with:
+          ref: stable
+
+      - name: Deploy to WordPress.org
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: pong-block
