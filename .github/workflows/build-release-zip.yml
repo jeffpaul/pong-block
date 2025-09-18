@@ -33,7 +33,7 @@ jobs:
           npm run build
 
       - name: Generate plugin ZIP
-        uses: 10up/action-wordpress-plugin-zip-generator@stable
+        uses: 10up/action-wordpress-plugin-build-zip@1.0.2
         with:
           slug: pong-block
 
