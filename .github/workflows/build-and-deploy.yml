@@ -6,19 +6,13 @@ name: WordPress Plugin Release
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to release (e.g., 1.0.0)'
-        required: true
-        type: string
 
 permissions:
   contents: write
   actions: read
 
 jobs:
-  build-and-release:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
@@ -39,79 +33,61 @@ jobs:
         with:
           php-version: '8.1'
 
-      - name: Install dependencies
+      - name: Install dependencies and build
         run: |
           npm install
-          # No composer dependencies needed for this plugin
-
-      - name: Build plugin
-        run: |
-          # Build block assets using WordPress scripts
           npm run build
 
-      - name: Prepare release
+      - name: Clean for release
         run: |
           # Remove files/directories listed in .distignore
           if [ -f .distignore ]; then
             echo "Removing files based on .distignore..."
             
-            # Process each line in .distignore
             while IFS= read -r line; do
               # Skip empty lines and comments
               if [[ -n "$line" && ! "$line" =~ ^[[:space:]]*# ]]; then
-                # Remove leading/trailing whitespace
                 line=$(echo "$line" | xargs)
                 
                 if [ -n "$line" ]; then
-                  echo "Removing: $line"
-                  rm -rf "$line" 2>/dev/null || true
+                  # Security validation: prevent directory traversal and absolute paths
+                  if [[ "$line" == /* ]]; then
+                    echo "Warning: Skipping absolute path: $line"
+                    continue
+                  fi
+                  
+                  if [[ "$line" == *../* ]] || [[ "$line" == *..* ]]; then
+                    echo "Warning: Skipping directory traversal path: $line"
+                    continue
+                  fi
+                  
+                  # Only allow safe relative paths
+                  if [[ "$line" =~ ^[a-zA-Z0-9._/-]+$ ]]; then
+                    echo "Removing: $line"
+                    rm -rf "./$line" 2>/dev/null || true
+                  else
+                    echo "Warning: Skipping path with invalid characters: $line"
+                  fi
                 fi
               fi
             done < .distignore
             
-            # Always remove .distignore itself from the final build
             rm -f .distignore
-          else
-            echo "Warning: .distignore file not found"
           fi
 
-      - name: Deploy to stable branch
+      - name: Deploy to stable and WordPress.org
         run: |
+          # Configure git
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Get commit message for stable branch
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            VERSION="${{ github.event.inputs.version }}"
-            COMMIT_MSG="Release version $VERSION"
-          else
-            # Use the commit message from main push
-            COMMIT_MSG="${{ github.event.head_commit.message }}"
-          fi
-          
-          # Stage all changes (including deletions from .distignore cleanup)
+          # Commit cleaned build
           git add -A
-          git commit -m "$COMMIT_MSG"
+          git commit -m "${{ github.event.head_commit.message }}"
           
-          # Create or switch to stable branch and push the cleaned build
+          # Push to stable branch
           git checkout -B stable
           git push origin stable --force
-          
-          # Create tag if version was specified
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            git tag -a "v$VERSION" -m "Release $VERSION"
-            git push origin "v$VERSION"
-          fi
-
-  # Deploy to WordPress.org SVN
-  wordpress-org-deploy:
-    needs: build-and-release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout stable branch
-        uses: actions/checkout@v4
-        with:
-          ref: stable
 
       - name: Deploy to WordPress.org
         uses: 10up/action-wordpress-plugin-deploy@stable
