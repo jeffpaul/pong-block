@@ -102,7 +102,24 @@ jobs:
             echo "Stable branch exists, switching to it"
             git fetch origin stable
             git checkout stable
-            git merge --no-ff -X theirs main -m "Merge main into stable: ${{ github.event.head_commit.message }}"
+            
+            # Attempt merge and detect conflicts
+            if git merge --no-ff main -m "Merge main into stable: ${{ github.event.head_commit.message }}"; then
+              echo "Clean merge completed successfully"
+            else
+              echo "Merge conflicts detected. This is expected for build artifacts."
+              echo "Resolving conflicts by using main branch version (built artifacts)..."
+              
+              # Show what files have conflicts for transparency
+              echo "Conflicted files:"
+              git diff --name-only --diff-filter=U || true
+              
+              # Resolve by taking main's version, but be explicit about it
+              git checkout --theirs .
+              git add .
+              git commit --no-edit
+              echo "Conflicts resolved in favor of main branch (built version)"
+            fi
           else
             echo "Creating new stable branch"
             git checkout -b stable
