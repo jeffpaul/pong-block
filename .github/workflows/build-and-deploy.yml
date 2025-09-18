@@ -91,14 +91,25 @@ jobs:
           # Check if there are any changes to commit
           if git diff --cached --quiet; then
             echo "No changes to commit after build and cleanup"
-            git commit --allow-empty -m "Build: ${{ github.event.head_commit.message }}"
+            git commit --allow-empty -m "Build (no changes): ${{ github.event.head_commit.message }}"
           else
+            echo "Committing build changes"
             git commit -m "Build: ${{ github.event.head_commit.message }}"
           fi
           
-          # Push to stable branch
-          git checkout -B stable
-          git push origin stable --force
+          # Push to stable branch safely
+          if git ls-remote --heads origin stable | grep -q stable; then
+            echo "Stable branch exists, switching to it"
+            git fetch origin stable
+            git checkout stable
+            git merge --no-ff -X theirs main -m "Merge main into stable: ${{ github.event.head_commit.message }}"
+          else
+            echo "Creating new stable branch"
+            git checkout -b stable
+          fi
+          
+          # Push the stable branch
+          git push origin stable
 
       - name: Deploy to WordPress.org
         uses: 10up/action-wordpress-plugin-deploy@stable
