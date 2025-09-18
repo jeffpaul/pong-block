@@ -32,6 +32,9 @@ jobs:
         with:
           php-version: '8.1'
 
+      - name: Install SVN
+        run: sudo apt-get update && sudo apt-get install -y subversion
+
       - name: Install dependencies and build
         run: |
           npm install
