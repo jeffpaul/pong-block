@@ -47,5 +47,8 @@ Yes.  Large, comfortable on-screen controls are available for mobile and tablets
 
 == Changelog ==
 
+= 0.1.1 - 2025-09-18 =
+* Fixed: WordPress.org assets.
+
 = 0.1.0 - 2025-09-18 =
-* Initial release to WordPress.org.
+* Added: Initial release to WordPress.org.
