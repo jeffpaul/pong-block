@@ -2,7 +2,7 @@
 Contributors:      jeffpaul, telex
 Tags:              pong, block, game, arcade, retro
 Tested up to:      6.8
-Stable tag:        0.1.0
+Stable tag:        0.1.1
 License:           GPL-2.0-or-later
 License URI:       https://spdx.org/licenses/GPL-2.0-or-later.html
 
@@ -47,5 +47,8 @@ Yes.  Large, comfortable on-screen controls are available for mobile and tablets
 
 == Changelog ==
 
+= 0.1.1 - 2025-09-18 =
+* Fixed: WordPress.org assets.
+
 = 0.1.0 - 2025-09-18 =
-* Initial release to WordPress.org.
+* Added: Initial release to WordPress.org.
