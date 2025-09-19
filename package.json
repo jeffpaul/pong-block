@@ -1,7 +1,7 @@
 
   {
 	"name": "pong-block",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Add an accessible, customizable Pong game to any post or page. Player vs Computer, responsive controls, color schemes, and inspector settings for difficulty.",
     "author": {
       "name": "Jeffrey Paul",

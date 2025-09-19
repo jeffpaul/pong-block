@@ -5,7 +5,7 @@
  * Description:       Adds a playable, accessible Pong game to your posts and pages. Customize difficulty, color scheme, and controls for the ultimate classic game experience.
  * Requires at least: 6.8
  * Requires PHP:      8.1
- * Version:           0.1.0
+ * Version:           0.1.1
  * Author:            Jeffrey Paul
  * Author URI:        https://jeffpaul.com
  * License:           GPL-2.0-or-later
@@ -16,7 +16,7 @@
  */
 
 // Useful global constants.
-define( 'PONG_BLOCK_VERSION', '0.1.0' );
+define( 'PONG_BLOCK_VERSION', '0.1.1' );
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
