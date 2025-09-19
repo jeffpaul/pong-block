@@ -4,7 +4,12 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [0.1.1] - 2025-09-19
+### Fixed
+- WordPress.org assets.
+
 ## [0.1.0] - 2025-09-18
+### Added
 - Initial release to WordPress.org.
 
 [Unreleased]: https://github.com/jeffpaul/pong-block/compare/main...develop
