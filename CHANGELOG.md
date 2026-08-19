@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [0.1.2] - 2026-08-19
+### Fixed
+- Block init no longer fatals when the `build/` directory is missing.
+### Changed
+- Attribute schema moved into `block.json` with bounds on paddle size, ball speed, and winning score.
+### Removed
+- Unused, empty `render.php`.
+
 ## [0.1.1] - 2025-09-19
 ### Fixed
 - WordPress.org assets.
