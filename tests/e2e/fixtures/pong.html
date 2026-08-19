@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Pong Block Test Fixture</title>
+	<style>
+		.pong-block__overlay {
+			position: absolute;
+			inset: 0;
+			display: none;
+			align-items: center;
+			justify-content: center;
+			background: rgba(0,0,0,0.7);
+			border-radius: 10px;
+			z-index: 10;
+		}
+		.pong-block__overlay-content { color: #fff; }
+		.pong-block__touch-btn {
+			font-size: 1.5em;
+			padding: 8px 14px;
+			border-radius: 6px;
+			border: 2px solid #fff;
+			background: rgba(0,0,0,0.5);
+			color: #fff;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div
+		class="pong-block__frontend"
+		data-paddle-size="80"
+		data-ball-speed="5"
+		data-winning-score="10"
+		data-color-scheme="dark"
+		data-difficulty="medium"
+	></div>
+	<script src="../../../src/view.js"></script>
+</body>
+</html>
