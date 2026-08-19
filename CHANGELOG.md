@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Block init no longer fatals when the `build/` directory is missing.
 ### Changed
 - Attribute schema moved into `block.json` with bounds on paddle size, ball speed, and winning score.
+- Bumped WordPress "Tested up to" version to 7.1 and "Requires at least" to 6.9.
 ### Removed
 - Unused, empty `render.php`.
 
