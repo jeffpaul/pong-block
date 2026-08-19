@@ -21,4 +21,6 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial release to WordPress.org.
 
 [Unreleased]: https://github.com/jeffpaul/pong-block/compare/main...develop
-[0.1.0]: https://github.com/jeffpaul/pong-block/tree/v0.1.0
+[0.1.2]: https://github.com/jeffpaul/pong-block/compare/0.1.1...0.1.2
+[0.1.1]: https://github.com/jeffpaul/pong-block/compare/0.1.0...0.1.1
+[0.1.0]: https://github.com/jeffpaul/pong-block/tree/0.1.0
