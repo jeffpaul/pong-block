@@ -21,6 +21,6 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.62.1",
-		"@wordpress/scripts": "^30.5.1"
+		"@wordpress/scripts": "^34.1.0"
 	}
 }
