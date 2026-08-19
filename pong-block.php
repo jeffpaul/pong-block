@@ -3,7 +3,7 @@
  * Plugin Name:       Pong Block
  * Plugin URI:        https://github.com/jeffpaul/pong-block
  * Description:       Adds a playable, accessible Pong game to your posts and pages. Customize difficulty, color scheme, and controls for the ultimate classic game experience.
- * Requires at least: 6.8
+ * Requires at least: 6.9
  * Requires PHP:      8.1
  * Version:           0.1.1
  * Author:            Jeffrey Paul
