@@ -50,6 +50,7 @@ Yes.  Large, comfortable on-screen controls are available for mobile and tablets
 = 0.1.2 - 2026-08-19 =
 * Fixed: Block init no longer fatals when the `build/` directory is missing.
 * Changed: Attribute schema moved into `block.json` with bounds on paddle size, ball speed, and winning score.
+* Changed: Bumped WordPress "Tested up to" version to 7.1 and "Requires at least" to 6.9.
 * Removed: Unused, empty `render.php`.
 
 = 0.1.1 - 2025-09-18 =
