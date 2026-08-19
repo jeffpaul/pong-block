@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file, per [the Ke
 
 ## [Unreleased] - TBD
 
+## [0.1.2] - 2026-08-19
+### Fixed
+- Block init no longer fatals when the `build/` directory is missing.
+### Changed
+- Attribute schema moved into `block.json` with bounds on paddle size, ball speed, and winning score.
+### Removed
+- Unused, empty `render.php`.
+
 ## [0.1.1] - 2025-09-19
 ### Fixed
 - WordPress.org assets.
@@ -13,4 +21,6 @@ All notable changes to this project will be documented in this file, per [the Ke
 - Initial release to WordPress.org.
 
 [Unreleased]: https://github.com/jeffpaul/pong-block/compare/main...develop
-[0.1.0]: https://github.com/jeffpaul/pong-block/tree/v0.1.0
+[0.1.2]: https://github.com/jeffpaul/pong-block/compare/0.1.1...0.1.2
+[0.1.1]: https://github.com/jeffpaul/pong-block/compare/0.1.0...0.1.1
+[0.1.0]: https://github.com/jeffpaul/pong-block/tree/0.1.0

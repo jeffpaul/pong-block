@@ -2,7 +2,7 @@
 Contributors:      jeffpaul, telex
 Tags:              pong, block, game, arcade, retro
 Tested up to:      7.1
-Stable tag:        0.1.1
+Stable tag:        0.1.2
 License:           GPL-2.0-or-later
 License URI:       https://spdx.org/licenses/GPL-2.0-or-later.html
 
@@ -46,6 +46,11 @@ Yes.  Large, comfortable on-screen controls are available for mobile and tablets
 3. Pong block editor controls showing "paddle size", "ball speed", "winning score", "default difficulty", and "color scheme" settings.
 
 == Changelog ==
+
+= 0.1.2 - 2026-08-19 =
+* Fixed: Block init no longer fatals when the `build/` directory is missing.
+* Changed: Attribute schema moved into `block.json` with bounds on paddle size, ball speed, and winning score.
+* Removed: Unused, empty `render.php`.
 
 = 0.1.1 - 2025-09-18 =
 * Fixed: WordPress.org assets.
