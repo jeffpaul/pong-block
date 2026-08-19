@@ -1,7 +1,7 @@
 === Pong Block ===
 Contributors:      jeffpaul, telex
 Tags:              pong, block, game, arcade, retro
-Tested up to:      6.8
+Tested up to:      7.1
 Stable tag:        0.1.1
 License:           GPL-2.0-or-later
 License URI:       https://spdx.org/licenses/GPL-2.0-or-later.html
