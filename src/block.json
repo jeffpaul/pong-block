@@ -1,14 +1,43 @@
-
-  {
+{
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "jeffpaul/pong-block",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"title": "Pong Block",
 	"category": "widgets",
 	"icon": "games",
 	"description": "Add an accessible, customizable Pong game to any post or page. Player vs Computer, responsive controls, color schemes, and inspector settings for difficulty.",
 	"example": {},
+	"attributes": {
+		"paddleSize": {
+			"type": "number",
+			"default": 80,
+			"minimum": 40,
+			"maximum": 140
+		},
+		"ballSpeed": {
+			"type": "number",
+			"default": 5,
+			"minimum": 3,
+			"maximum": 12
+		},
+		"winningScore": {
+			"type": "number",
+			"default": 10,
+			"minimum": 3,
+			"maximum": 20
+		},
+		"colorScheme": {
+			"type": "string",
+			"default": "dark",
+			"enum": [ "dark", "light", "highContrast" ]
+		},
+		"difficulty": {
+			"type": "string",
+			"default": "medium",
+			"enum": [ "easy", "medium", "hard" ]
+		}
+	},
 	"supports": {
 		"html": false
 	},
@@ -17,5 +46,4 @@
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
 	"viewScript": "file:./view.js"
-  }
-  
+}

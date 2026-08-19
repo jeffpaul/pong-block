@@ -14,7 +14,6 @@ cache
 
 # Project Files
 backstop_data
-package-lock.json
 pnpm-lock.yaml
 yarn.lock
 
@@ -42,4 +41,5 @@ Desktop.ini
 /db.php
 
 # Tests
-tests/**
+/playwright-report
+/test-results

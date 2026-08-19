@@ -1,12 +1,11 @@
-
-  {
+{
 	"name": "pong-block",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Add an accessible, customizable Pong game to any post or page. Player vs Computer, responsive controls, color schemes, and inspector settings for difficulty.",
-    "author": {
-      "name": "Jeffrey Paul",
-      "url": "https://jeffpaul.com"
-    },
+	"author": {
+		"name": "Jeffrey Paul",
+		"url": "https://jeffpaul.com"
+	},
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
@@ -16,9 +15,12 @@
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
-		"start": "wp-scripts start --blocks-manifest"
+		"start": "wp-scripts start --blocks-manifest",
+		"test:e2e": "playwright test"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^30.5.1"
+		"@playwright/test": "^1.62.1",
+		"@wordpress/scripts": "^34.1.0",
+		"typescript": "^5.7.0"
 	}
 }
