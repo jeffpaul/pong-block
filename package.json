@@ -16,9 +16,11 @@
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
-		"start": "wp-scripts start --blocks-manifest"
+		"start": "wp-scripts start --blocks-manifest",
+		"test:e2e": "playwright test"
 	},
 	"devDependencies": {
+		"@playwright/test": "^1.62.1",
 		"@wordpress/scripts": "^30.5.1"
 	}
 }
