@@ -20,7 +20,7 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.62.1",
-		"@wordpress/scripts": "^34.1.0",
+		"@wordpress/scripts": "^34.2.0",
 		"typescript": "^5.7.0"
 	}
 }
